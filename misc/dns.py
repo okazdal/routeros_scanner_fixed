@@ -24,15 +24,10 @@ class DNS(BaseCommand):
         recommendation = []
 
         for item in res:
-            # print(item['ttl'].partition('s')[0])
             try:
                 i = int(hms(item['ttl'].partition('s')[0]))
             except IndexError:
                 continue
-            # if item['ttl'].partition('s')[0] == '0':
-            #     continue
-            # if int(item['ttl'].partition('s')[0]) > 200000:
-            # if int(hms(item['ttl'].partition('s')[0])) > 200000:
             if i > 200000:
                 sus_dns.append(f'Domain name: {item["name"]} with ip {item["address"]}: might be DNS poisoning- '
                                f'severity: high')
@@ -55,6 +50,3 @@ def hms(s):
         return l[0]*60 + l[1]
     else:
         return l[0]
-
-
-
